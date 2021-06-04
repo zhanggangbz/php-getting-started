@@ -1,25 +1,18 @@
 <?php
+/**
+ * PrivateBin
+ *
+ * a zero-knowledge paste bin
+ *
+ * @link      https://github.com/PrivateBin/PrivateBin
+ * @copyright 2012 Sébastien SAUVAGE (sebsauvage.net)
+ * @license   https://www.opensource.org/licenses/zlib-license.php The zlib/libpng License
+ * @version   1.3.5
+ */
 
-require('../vendor/autoload.php');
+// change this, if your php files and data is outside of your webservers document root
+define('PATH', '');
 
-$app = new Silex\Application();
-$app['debug'] = true;
-
-// Register the monolog logging service
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
-  'monolog.logfile' => 'php://stderr',
-));
-
-// Register view rendering
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
-
-// Our web handlers
-
-$app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging output.');
-  return $app['twig']->render('index.twig');
-});
-
-$app->run();
+define('PUBLIC_PATH', __DIR__);
+require PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+new PrivateBin\Controller;
